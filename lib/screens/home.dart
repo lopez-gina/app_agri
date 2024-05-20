@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LeafLabelQuiz()),
+                  MaterialPageRoute(builder: (context) => Dragdrop()),
                 );
               },
               child: Text('Drag and Drop Question'),
@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TextureClassQuiz()),
+                  MaterialPageRoute(builder: (context) => Dragdropmark()),
                 );
               },
               child: Text('Drag and Drop into markers Question'),

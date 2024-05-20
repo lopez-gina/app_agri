@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../globals.dart' as globals;
 
-class LeafLabelQuiz extends StatefulWidget {
+class Dragdrop extends StatefulWidget {
   @override
-  _LeafLabelQuizState createState() => _LeafLabelQuizState();
+  _DragdropState createState() => _DragdropState();
 }
 
-class _LeafLabelQuizState extends State<LeafLabelQuiz> {
+class _DragdropState extends State<Dragdrop> {
   double _scale = 1.0;
   double _previousScale = 1.0;
   Map<String, bool> labelPositions = {
