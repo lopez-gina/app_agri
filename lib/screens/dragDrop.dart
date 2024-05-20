@@ -41,32 +41,53 @@ class _LeafLabelQuizState extends State<LeafLabelQuiz> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Label the Parts of a Leaf'),
+        title: Text(
+          'Agri-APP',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       body: Column(
         children: <Widget>[
+          Container(
+            width: double.infinity,
+            color: Theme.of(context).cardTheme.color,
+            padding: EdgeInsets.all(16),
+            child: Text(
+              'Label the Parts of a Leaf',
+              style: Theme.of(context).textTheme.headlineMedium,
+              textAlign: TextAlign.center,
+            ),
+          ),
           Expanded(
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 // Draggable labels
-                Column(
-                  children: labelPositions.keys.map((label) {
-                    return LongPressDraggable<String>(
-                      data: label,
-                      feedback: DraggableLabel(
-                        label: label,
-                        isDragging: true,
-                        key: ValueKey(label),
-                      ),
-                      childWhenDragging: Container(),
-                      child: labelPositions[label] ?? false
-                          ? Container()
-                          : DraggableLabel(
-                              label: label,
-                              key: ValueKey(label),
-                            ),
-                    );
-                  }).toList(),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: labelPositions.keys.map((label) {
+                      return LongPressDraggable<String>(
+                        data: label,
+                        feedback: Material(
+                          color: Colors.transparent,
+                          child: DraggableLabel(
+                            label: label,
+                            isDragging: true,
+                            key: ValueKey(label),
+                          ),
+                        ),
+                        childWhenDragging: Container(),
+                        child: labelPositions[label] ?? false
+                            ? Container()
+                            : DraggableLabel(
+                                label: label,
+                                key: ValueKey(label),
+                              ),
+                      );
+                    }).toList(),
+                  ),
                 ),
                 Expanded(
                   child: GestureDetector(
@@ -91,11 +112,43 @@ class _LeafLabelQuizState extends State<LeafLabelQuiz> {
                             children: <Widget>[
                               Image.asset('assets/leaf_wo_l.png'),
                               Positioned(
-                                top: 50,
-                                left: 100,
+                                top: 40,
+                                left: 640,
                                 child: buildDragTarget(context, "Cuticle"),
                               ),
-                              // Add more Positioned widgets for other parts
+                              Positioned(
+                                top: 90,
+                                left: 640,
+                                child: buildDragTarget(context, "Epidermis"),
+                              ),
+                              Positioned(
+                                top: 170,
+                                left: 640,
+                                child: buildDragTarget(
+                                    context, "Palisade mesophyll"),
+                              ),
+                              Positioned(
+                                top: 275,
+                                left: 20,
+                                child: buildDragTarget(
+                                    context, "Spongy mesophyll"),
+                              ),
+                              Positioned(
+                                top: 255,
+                                left: 640,
+                                child: buildDragTarget(context, "Vein"),
+                              ),
+                              Positioned(
+                                top: 360,
+                                left: 20,
+                                child: buildDragTarget(context, "Stomata"),
+                              ),
+                              Positioned(
+                                top: 330,
+                                left: 640,
+                                child:
+                                    buildDragTarget(context, "Lower Epidermis"),
+                              ),
                             ],
                           ),
                         ),
@@ -107,7 +160,13 @@ class _LeafLabelQuizState extends State<LeafLabelQuiz> {
             ),
           ),
           // Score Display
-          Text('Score: ${globals.globalScore}'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Score: ${globals.globalScore}',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ),
         ],
       ),
     );
@@ -163,10 +222,10 @@ class DraggableLabel extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
       ),
     );
   }
