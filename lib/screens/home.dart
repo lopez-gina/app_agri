@@ -9,14 +9,17 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agri App'),
+        title: Text(
+          'Agri-APP',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Agri App',
+              'Questions',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             SizedBox(height: 20),
