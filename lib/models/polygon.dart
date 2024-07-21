@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class Polygon {
   final List<Offset> vertices;
+  final Offset centroid;
 
-  Polygon(this.vertices);
+  Polygon(this.vertices,this.centroid);
 
   bool contains(Offset point) {
     bool result = false;
@@ -19,4 +20,5 @@ class Polygon {
     }
     return result;
   }
+
 }

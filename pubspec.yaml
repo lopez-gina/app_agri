@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.0 <4.0.0'
+  sdk: '>=3.3.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,6 +30,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  # diagram_editor: ^0.0.10
+  diagram_editor: ^0.2.1
+
+  flutter_colorpicker: ^1.0.3
+  url_launcher: ^6.2.6
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -60,8 +66,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/leaf_wo_l.png
-    - assets/texture_class.png
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

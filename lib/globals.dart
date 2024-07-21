@@ -1,3 +1,4 @@
 library globals;
 
-int globalScore = 0;
+List<int> globalScore = [0, 0, 0, 0, 0, 0];
+List<bool> isSubmitted = [false, false, false, false, false, false];
