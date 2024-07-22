@@ -148,7 +148,7 @@ class Question2ScreenState extends State<Question2Screen>
         children: <Widget>[
           Header(
               text:
-                  '${globals.isSubmitted[1] ? 'CORRECTION - ' : ''}Question 2\nLabel the texture classes in the triangle${globals.isSubmitted[1] ? '\nCorrect answers: ${globals.globalScore[1]}/12' : ''}'),
+                  '${globals.isSubmitted[1] ? 'CORRECTION - ' : ''}Question 2\nLabel the texture classes in the triangle${globals.isSubmitted[1] ? '\nCorrect answers: ${globals.globalScore[1]}/${globals.correctNumbers[1]}' : ''}'),
           !globals.isSubmitted[1]
               ? Wrap(
                   spacing: 8.0,

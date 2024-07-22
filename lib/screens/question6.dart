@@ -55,7 +55,6 @@ class Question6ScreenState extends State<Question6Screen>
   void checkAllAnswers() {
     for (var entry in userAnswers.entries) {
       if (entry.value == null) {
-        // return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
               backgroundColor: Colors.redAccent,
@@ -80,7 +79,7 @@ class Question6ScreenState extends State<Question6Screen>
         children: <Widget>[
           Header(
               text:
-                  '${globals.isSubmitted[5] ? 'CORRECTION - ' : ''}Question 6\nComplete the paragraph with the correct answers${globals.isSubmitted[5] ? '\nCorrect answers: ${globals.globalScore[5]}/8' : ''}'),
+                  '${globals.isSubmitted[5] ? 'CORRECTION - ' : ''}Question 6\nComplete the paragraph with the correct answers${globals.isSubmitted[5] ? '\nCorrect answers: ${globals.globalScore[5]}/${globals.correctNumbers[5]}' : ''}'),
           if (globals.isSubmitted[5])
             Text("Correct answer:",
                 style: Theme.of(context).textTheme.displaySmall?.copyWith(

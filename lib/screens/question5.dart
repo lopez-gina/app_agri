@@ -33,7 +33,7 @@ class Question5ScreenState extends State<Question5Screen>
           children: [
             Header(
                 text:
-                    '${globals.isSubmitted[4] ? 'CORRECTION - ' : ''}Question 5\nComplete the cycle of nitrogen${globals.isSubmitted[4] ? '\nCorrect answers: ${globals.globalScore[4]}/15' : ''}'),
+                    '${globals.isSubmitted[4] ? 'CORRECTION - ' : ''}Question 5\nComplete the cycle of nitrogen${globals.isSubmitted[4] ? '\nCorrect answers: ${globals.globalScore[4]}/${globals.correctNumbers[4]}' : ''}'),
             if (globals.isSubmitted[4])
               Padding(
                 padding: const EdgeInsets.all(12.0),

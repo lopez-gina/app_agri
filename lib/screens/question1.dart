@@ -67,7 +67,7 @@ class DragdropState extends State<Dragdrop> with AutomaticKeepAliveClientMixin {
           children: <Widget>[
             Header(
                 text:
-                    '${globals.isSubmitted[0] ? 'CORRECTION - ' : ''}Question 1\nLabel the parts of a leaf${globals.isSubmitted[0] ? '\nCorrect answers: ${globals.globalScore[0]}/${labelPositions.length}' : ''}'),
+                    '${globals.isSubmitted[0] ? 'CORRECTION - ' : ''}Question 1\nLabel the parts of a leaf${globals.isSubmitted[0] ? '\nCorrect answers: ${globals.globalScore[0]}/${globals.correctNumbers[0]}' : ''}'),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

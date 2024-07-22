@@ -1,4 +1,3 @@
-
 import 'package:app_agri/common_widget/header.dart';
 import 'package:app_agri/common_widget/score_text.dart';
 import 'package:app_agri/simple_diagram_editor/widget/editor.dart';
@@ -30,7 +29,7 @@ class Question4ScreenState extends State<Question4Screen>
           children: [
             Header(
                 text:
-                    '${globals.isSubmitted[3] ? 'CORRECTION - ' : ''}Question 4\nComplete the layers of the soil${globals.isSubmitted[3] ? '\nCorrect answers: ${globals.globalScore[3]}/4' : ''}'),
+                    '${globals.isSubmitted[3] ? 'CORRECTION - ' : ''}Question 4\nComplete the layers of the soil${globals.isSubmitted[3] ? '\nCorrect answers: ${globals.globalScore[3]}/${globals.correctNumbers[3]}' : ''}'),
             if (globals.isSubmitted[3])
               Padding(
                 padding: const EdgeInsets.all(12.0),

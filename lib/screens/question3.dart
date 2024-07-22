@@ -1,4 +1,3 @@
-
 import 'package:app_agri/common_widget/header.dart';
 import 'package:app_agri/common_widget/score_text.dart';
 import 'package:flutter/material.dart';
@@ -146,7 +145,7 @@ class Question3ScreenState extends State<Question3Screen>
         children: [
           Header(
               text:
-                  '${globals.isSubmitted[2] ? 'CORRECTION - ' : ''}Question 3\nWrite the symbol equation of the photosynthesis${globals.isSubmitted[2] ? '\nCorrect answers: ${globals.globalScore[2]}/10' : ''}'),
+                  '${globals.isSubmitted[2] ? 'CORRECTION - ' : ''}Question 3\nWrite the symbol equation of the photosynthesis${globals.isSubmitted[2] ? '\nCorrect answers: ${globals.globalScore[2]}/${globals.correctNumbers[2]}' : ''}'),
           const SizedBox(height: 30),
           if (globals.isSubmitted[2]) ...[
             Text("Correct answer:",
@@ -311,10 +310,8 @@ class Question3ScreenState extends State<Question3Screen>
   void dispose() {
     super.dispose();
     _currentController.dispose();
-    for (var controller in _controllers) {
-      controller.dispose();
-    }
     for (var focusNode in _focusNodes) {
+      focusNode.removeListener(() {});
       focusNode.dispose();
     }
   }

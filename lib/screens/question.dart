@@ -5,6 +5,7 @@ import 'package:app_agri/screens/question3.dart';
 import 'package:app_agri/screens/question4.dart';
 import 'package:app_agri/screens/question5.dart';
 import 'package:app_agri/screens/question6.dart';
+import 'package:app_agri/screens/summary.dart';
 import 'package:flutter/material.dart';
 
 import '../common_widget/custom_app_bar.dart';
@@ -32,7 +33,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
       GlobalKey<Question6ScreenState>();
 
   final PageController _pageController = PageController();
-  
+
   int _currentPage = 0;
 
   void _goToPage(int page) {
@@ -77,6 +78,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
             appBar: CustomAppBar(context: context),
             bottomNavigationBar: Footer(
               onSubmit: () {
+                if (_currentPage > 0 &&
+                    !globals.isSubmitted[_currentPage - 1]) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        backgroundColor: Colors.redAccent,
+                        content: Text('Please submit previous questions!')),
+                  );
+                  return;
+                }
                 _submitAnswer();
                 setState(() {});
               },
@@ -85,20 +95,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
               onNext: _currentPage < 5
                   ? () => _goToPage(_currentPage + 1)
                   : globals.isSubmitted[5]
-                      ? () {
-                          globals.globalScore.fillRange(0, 6, 0);
-                          globals.isSubmitted.fillRange(0, 6, false);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomeScreen()));
-                        }
+                      ? () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SummaryScreen()))
                       : () {},
               visible: !globals.isSubmitted[_currentPage],
             ),
             body: PageView(
               physics: const NeverScrollableScrollPhysics(),
-        
               controller: _pageController,
               children: [
                 Dragdrop(
@@ -114,7 +119,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 ),
                 Question6Screen(
                   key: _question6Key,
-                 
                 ),
               ],
               onPageChanged: (page) => setState(() => _currentPage = page),
