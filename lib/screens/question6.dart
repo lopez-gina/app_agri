@@ -161,11 +161,13 @@ class Question6ScreenState extends State<Question6Screen>
         alignment: Alignment.center,
         borderRadius: const BorderRadius.all(Radius.circular(12)),
         hint: const Text('Choose...'),
-        onChanged: (String? newValue) {
-          setState(() {
-            userAnswers[key] = newValue!;
-          });
-        },
+        onChanged: !globals.isSubmitted[5]
+            ? (String? newValue) {
+                setState(() {
+                  userAnswers[key] = newValue!;
+                });
+              }
+            : null,
         items: options[key]!.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,

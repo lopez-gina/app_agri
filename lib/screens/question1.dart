@@ -62,16 +62,16 @@ class DragdropState extends State<Dragdrop> with AutomaticKeepAliveClientMixin {
     super.build(context);
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Header(
-                text:
-                    '${globals.isSubmitted[0] ? 'CORRECTION - ' : ''}Question 1\nLabel the parts of a leaf${globals.isSubmitted[0] ? '\nCorrect answers: ${globals.globalScore[0]}/${globals.correctNumbers[0]}' : ''}'),
-            Expanded(
-              child: Column(
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Header(
+                  text:
+                      '${globals.isSubmitted[0] ? 'CORRECTION - ' : ''}Question 1\nLabel the parts of a leaf${globals.isSubmitted[0] ? '\nCorrect answers: ${globals.globalScore[0]}/${globals.correctNumbers[0]}' : ''}'),
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   // Draggable labels
                   !globals.isSubmitted[0]
@@ -92,7 +92,14 @@ class DragdropState extends State<Dragdrop> with AutomaticKeepAliveClientMixin {
                                       key: ValueKey(label),
                                     ),
                                   ),
-                                  childWhenDragging: Container(),
+                                  childWhenDragging: Opacity(
+                                    opacity: 0.75,
+                                    child: DraggableLabel(
+                                      label: label,
+                                      isDragging: true,
+                                      key: ValueKey(label),
+                                    ),
+                                  ),
                                   child: DraggableLabel(
                                     label: label,
                                     key: ValueKey(label),
@@ -122,71 +129,63 @@ class DragdropState extends State<Dragdrop> with AutomaticKeepAliveClientMixin {
                     onScaleEnd: (ScaleEndDetails details) {
                       _previousScale = 1.0;
                     },
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Transform.scale(
-                          scale: _scale,
-                          child: Stack(
-                            children: <Widget>[
-                              Image.asset(
-                                'assets/leaf_v1.png',
-                              ),
-                              Positioned(
-                                top: 40,
-                                left: 640,
-                                child: buildDragTarget(context, "Cuticle"),
-                              ),
-                              Positioned(
-                                top: 90,
-                                left: 640,
-                                child: buildDragTarget(context, "Epidermis"),
-                              ),
-                              Positioned(
-                                top: 170,
-                                left: 640,
-                                child: buildDragTarget(
-                                    context, "Palisade mesophyll"),
-                              ),
-                              Positioned(
-                                top: 275,
-                                left: 20,
-                                child: buildDragTarget(
-                                    context, "Spongy mesophyll"),
-                              ),
-                              Positioned(
-                                top: 255,
-                                left: 640,
-                                child: buildDragTarget(context, "Vein"),
-                              ),
-                              Positioned(
-                                top: 360,
-                                left: 20,
-                                child: buildDragTarget(context, "Stomata"),
-                              ),
-                              Positioned(
-                                top: 330,
-                                left: 640,
-                                child:
-                                    buildDragTarget(context, "Lower Epidermis"),
-                              ),
-                            ],
+                    child: Transform.scale(
+                      scale: _scale,
+                      child: Stack(
+                        children: <Widget>[
+                          Image.asset(
+                            'assets/leaf_v1.png',
                           ),
-                        ),
+                          Positioned(
+                            top: 40,
+                            left: 640,
+                            child: buildDragTarget(context, "Cuticle"),
+                          ),
+                          Positioned(
+                            top: 90,
+                            left: 640,
+                            child: buildDragTarget(context, "Epidermis"),
+                          ),
+                          Positioned(
+                            top: 170,
+                            left: 640,
+                            child:
+                                buildDragTarget(context, "Palisade mesophyll"),
+                          ),
+                          Positioned(
+                            top: 275,
+                            left: 20,
+                            child: buildDragTarget(context, "Spongy mesophyll"),
+                          ),
+                          Positioned(
+                            top: 255,
+                            left: 640,
+                            child: buildDragTarget(context, "Vein"),
+                          ),
+                          Positioned(
+                            top: 360,
+                            left: 20,
+                            child: buildDragTarget(context, "Stomata"),
+                          ),
+                          Positioned(
+                            top: 330,
+                            left: 640,
+                            child: buildDragTarget(context, "Lower Epidermis"),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
-            // Score Display
-            globals.isSubmitted[0]
-                ? ScoreText(
-                    score: globals.globalScore
-                        .reduce((value, element) => value + element))
-                : Container(),
-          ],
+              // Score Display
+              globals.isSubmitted[0]
+                  ? ScoreText(
+                      score: globals.globalScore
+                          .reduce((value, element) => value + element))
+                  : Container(),
+            ],
+          ),
         ),
       ),
     );

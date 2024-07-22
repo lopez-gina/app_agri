@@ -1,3 +1,4 @@
+import 'package:app_agri/common_widget/sliver_persistent_header.dart';
 import 'package:app_agri/models/polygon.dart';
 import 'package:flutter/material.dart';
 import '../common_widget/header.dart';
@@ -144,55 +145,71 @@ class Question2ScreenState extends State<Question2Screen>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Header(
-              text:
-                  '${globals.isSubmitted[1] ? 'CORRECTION - ' : ''}Question 2\nLabel the texture classes in the triangle${globals.isSubmitted[1] ? '\nCorrect answers: ${globals.globalScore[1]}/${globals.correctNumbers[1]}' : ''}'),
-          !globals.isSubmitted[1]
-              ? Wrap(
-                  spacing: 8.0,
-                  runSpacing: 8.0,
-                  alignment: WrapAlignment.start,
-                  children: droppedLabels.keys.map((label) {
-                    return _buildDraggable(label);
-                  }).toList())
-              : Align(
-                  alignment: Alignment.center,
-                  child: Text("Correct answer:",
-                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                            color: Colors.black,
-                          )),
-                ),
-
-          // Image  below
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Stack(
-                  children: <Widget>[
-                    Image.asset(
-                      key: _imageKey,
-                      globals.isSubmitted[1]
-                          ? 'assets/question2_correct.png'
-                          : 'assets/question2.png',
+      body: Center(
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Header(
+                  text:
+                      '${globals.isSubmitted[1] ? 'CORRECTION - ' : ''}Question 2\nLabel the texture classes in the triangle${globals.isSubmitted[1] ? '\nCorrect answers: ${globals.globalScore[1]}/${globals.correctNumbers[1]}' : ''}'),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 4)),
+            !globals.isSubmitted[1]
+                ? CustomSliverPersistentHeader(
+                    child: Wrap(
+                        spacing: 8.0,
+                        runSpacing: 8.0,
+                        alignment: WrapAlignment.center,
+                        children: droppedLabels.keys.map((label) {
+                          return _buildDraggable(label);
+                        }).toList()))
+                : SliverToBoxAdapter(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text("Correct answer:",
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall
+                              ?.copyWith(
+                                color: Colors.black,
+                              )),
                     ),
-                    if (!globals.isSubmitted[1])
-                      ...textureRegions.keys
-                          .map((label) => _buildMarkLabel(label)),
-                  ],
+                  ),
+
+            // Image  below
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 64),
+                child: InteractiveViewer(
+                  maxScale: 1.5,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Stack(
+                      children: <Widget>[
+                        Image.asset(
+                          key: _imageKey,
+                          globals.isSubmitted[1]
+                              ? 'assets/question2_correct.png'
+                              : 'assets/question2.png',
+                        ),
+                        if (!globals.isSubmitted[1])
+                          ...textureRegions.keys
+                              .map((label) => _buildMarkLabel(label)),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          globals.isSubmitted[1]
-              ? ScoreText(
-                  score: globals.globalScore
-                      .reduce((value, element) => value + element))
-              : Container(),
-        ],
+            SliverToBoxAdapter(
+              child: globals.isSubmitted[1]
+                  ? ScoreText(
+                      score: globals.globalScore
+                          .reduce((value, element) => value + element))
+                  : Container(),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -218,7 +235,10 @@ class Question2ScreenState extends State<Question2Screen>
         elevation: 4.0,
         child: _buildLabel(label),
       ),
-      childWhenDragging: Container(),
+      childWhenDragging: Opacity(
+        opacity: 0.75,
+        child: _buildLabel(label),
+      ),
       child: _buildLabel(label),
       onDragStarted: () => _isDragging = true,
       onDragUpdate: (dragDetails) {
@@ -246,7 +266,6 @@ class Question2ScreenState extends State<Question2Screen>
   Widget _buildLabel(String label) {
     return Container(
       padding: const EdgeInsets.all(7.0),
-      margin: const EdgeInsets.all(4.0),
       decoration: BoxDecoration(
         color: Colors.blue,
         borderRadius: BorderRadius.circular(4.0),

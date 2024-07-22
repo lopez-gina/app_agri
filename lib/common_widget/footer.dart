@@ -7,7 +7,7 @@ class Footer extends StatelessWidget {
   final VoidCallback onSubmit;
   final VoidCallback onBack;
   final VoidCallback onNext;
-  bool? visible;
+  bool visible;
 
   Footer(
       {super.key,
@@ -22,9 +22,9 @@ class Footer extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 20),
       child: Row(
         mainAxisAlignment:
-            visible! ? MainAxisAlignment.center : MainAxisAlignment.end,
+            visible ? MainAxisAlignment.center : MainAxisAlignment.end,
         children: [
-          if (visible!)
+          if (visible)
             CustomButton(
               text: 'Back',
               onPressed: onBack,
@@ -35,12 +35,12 @@ class Footer extends StatelessWidget {
           CustomButton(
             text: 'Next',
             onPressed: onNext,
-            borderRadius: visible!
+            borderRadius: visible
                 ? BorderRadius.zero
                 : const BorderRadius.horizontal(right: Radius.circular(20)),
           ),
           const SizedBox(width: 10),
-          if (visible!)
+          if (visible)
             CustomButton(
               text: 'Submit',
               onPressed: onSubmit,

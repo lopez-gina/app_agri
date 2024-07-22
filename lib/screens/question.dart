@@ -78,15 +78,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
             appBar: CustomAppBar(context: context),
             bottomNavigationBar: Footer(
               onSubmit: () {
-                if (_currentPage > 0 &&
-                    !globals.isSubmitted[_currentPage - 1]) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        backgroundColor: Colors.redAccent,
-                        content: Text('Please submit previous questions!')),
-                  );
-                  return;
-                }
+                // if (_currentPage > 0 &&
+                //     !globals.isSubmitted[_currentPage - 1]) {
+                //   ScaffoldMessenger.of(context).showSnackBar(
+                //     const SnackBar(
+                //         backgroundColor: Colors.redAccent,
+                //         content: Text('Please submit previous questions!')),
+                //   );
+                //   return;
+                // }
                 _submitAnswer();
                 setState(() {});
               },
