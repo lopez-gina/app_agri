@@ -29,6 +29,21 @@ class Question2ScreenState extends State<Question2Screen>
     'Silt loam': null,
   };
 
+  final Map<String, bool> labelPositions = {
+    'Clay': false,
+    'Silt': false,
+    'Sand': false,
+    'Sandy clay': false,
+    'Sandy clay loam': false,
+    'Sandy loam': false,
+    'Loamy sand': false,
+    'Loam': false,
+    'Clay loam': false,
+    'Silty clay': false,
+    'Silty clay loam': false,
+    'Silt loam': false,
+  };
+
   final Map<String, Polygon> textureRegions = {
     'Clay': Polygon([
       const Offset(410, 40),
@@ -160,7 +175,10 @@ class Question2ScreenState extends State<Question2Screen>
                         spacing: 8.0,
                         runSpacing: 8.0,
                         alignment: WrapAlignment.center,
-                        children: droppedLabels.keys.map((label) {
+                        children: labelPositions.keys
+                            .where((label) => labelPositions[label] == false)
+                            .map((label) {
+                          //children: droppedLabels.keys.map((label) {
                           return _buildDraggable(label);
                         }).toList()))
                 : SliverToBoxAdapter(
@@ -218,10 +236,17 @@ class Question2ScreenState extends State<Question2Screen>
     return Positioned(
       left: textureRegions[label]!.centroid.dx - 5,
       top: textureRegions[label]!.centroid.dy,
-      child: Text(
-        droppedLabels[label] == null ? "?" : droppedLabels[label]!,
-        style: const TextStyle(color: Colors.green, fontSize: 20),
-      ),
+      child: droppedLabels[label] == null
+          ? const Text(
+              "?",
+              //  ? "?" : droppedLabels[label]!,
+              style: TextStyle(color: Colors.green, fontSize: 20),
+            )
+          : _buildDraggable(droppedLabels[label]!),
+      // child: Text(
+      //   droppedLabels[label] == null ? "?" : droppedLabels[label]!,
+      //   style: const TextStyle(color: Colors.green, fontSize: 20),
+      // ),
     );
   }
 
@@ -250,15 +275,33 @@ class Question2ScreenState extends State<Question2Screen>
         _isDragging = false;
 
         Offset imageOffset = _getImagePosition();
+        bool found = false;
+        String? replacedLabel;
         for (var element in textureRegions.keys) {
           if (textureRegions[element]!
               .contains(_currentDragPosition - imageOffset)) {
-            droppedLabels
-                .updateAll((key, value) => value == label ? null : value);
-            droppedLabels[element] = label;
+            setState(() {
+              replacedLabel = droppedLabels[element];
+              droppedLabels
+                  .updateAll((key, value) => value == label ? null : value);
+              droppedLabels[element] = label;
+              labelPositions[label] = true;
+              if (replacedLabel != null) {
+                labelPositions[replacedLabel!] = false;
+              }
+            });
+            found = true;
+            break;
           }
         }
-        setState(() {});
+        // If not found in any region, the label is returned to the menu
+        if (!found) {
+          setState(() {
+            droppedLabels
+                .updateAll((key, value) => value == label ? null : value);
+            labelPositions[label] = false;
+          });
+        }
       },
     );
   }

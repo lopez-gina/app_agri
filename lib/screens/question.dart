@@ -1,4 +1,3 @@
-import 'package:app_agri/screens/home.dart';
 import 'package:app_agri/screens/question1.dart';
 import 'package:app_agri/screens/question2.dart';
 import 'package:app_agri/screens/question3.dart';
@@ -39,7 +38,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   void _goToPage(int page) {
     _pageController.animateToPage(
       page,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
     setState(() {
@@ -69,6 +68,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         _question6Key.currentState?.checkAllAnswers();
         break;
     }
+    setState(() {});
   }
 
   @override
@@ -77,29 +77,18 @@ class _QuestionScreenState extends State<QuestionScreen> {
         child: Scaffold(
             appBar: CustomAppBar(context: context),
             bottomNavigationBar: Footer(
-              onSubmit: () {
-                // if (_currentPage > 0 &&
-                //     !globals.isSubmitted[_currentPage - 1]) {
-                //   ScaffoldMessenger.of(context).showSnackBar(
-                //     const SnackBar(
-                //         backgroundColor: Colors.redAccent,
-                //         content: Text('Please submit previous questions!')),
-                //   );
-                //   return;
-                // }
-                _submitAnswer();
-                setState(() {});
-              },
+              onSubmit: () => _submitAnswer(),
               onBack:
                   _currentPage > 0 ? () => _goToPage(_currentPage - 1) : () {},
               onNext: _currentPage < 5
-                  ? () => _goToPage(_currentPage + 1)
-                  : globals.isSubmitted[5]
-                      ? () => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SummaryScreen()))
-                      : () {},
+                  ? () {
+                      globals.isSubmitted[_currentPage] = true;
+                      _goToPage(_currentPage + 1);
+                    }
+                  : () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SummaryScreen())),
               visible: !globals.isSubmitted[_currentPage],
             ),
             body: PageView(

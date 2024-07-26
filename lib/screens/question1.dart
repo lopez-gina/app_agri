@@ -62,15 +62,15 @@ class DragdropState extends State<Dragdrop> with AutomaticKeepAliveClientMixin {
     super.build(context);
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Header(
-                  text:
-                      '${globals.isSubmitted[0] ? 'CORRECTION - ' : ''}Question 1\nLabel the parts of a leaf${globals.isSubmitted[0] ? '\nCorrect answers: ${globals.globalScore[0]}/${globals.correctNumbers[0]}' : ''}'),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Header(
+                text:
+                    '${globals.isSubmitted[0] ? 'CORRECTION - ' : ''}Question 1\nLabel the parts of a leaf${globals.isSubmitted[0] ? '\nCorrect answers: ${globals.globalScore[0]}/${globals.correctNumbers[0]}' : ''}'),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   // Draggable labels
@@ -81,30 +81,11 @@ class DragdropState extends State<Dragdrop> with AutomaticKeepAliveClientMixin {
                               spacing: 8.0,
                               runSpacing: 8.0,
                               alignment: WrapAlignment.start,
-                              children: droppedLabels.keys.map((label) {
-                                return Draggable<String>(
-                                  data: label,
-                                  feedback: Material(
-                                    color: Colors.transparent,
-                                    child: DraggableLabel(
-                                      label: label,
-                                      isDragging: true,
-                                      key: ValueKey(label),
-                                    ),
-                                  ),
-                                  childWhenDragging: Opacity(
-                                    opacity: 0.75,
-                                    child: DraggableLabel(
-                                      label: label,
-                                      isDragging: true,
-                                      key: ValueKey(label),
-                                    ),
-                                  ),
-                                  child: DraggableLabel(
-                                    label: label,
-                                    key: ValueKey(label),
-                                  ),
-                                );
+                              children: labelPositions.keys
+                                  .where((element) =>
+                                      labelPositions[element] == false)
+                                  .map((label) {
+                                return _buildDraggable(label);
                               }).toList()),
                         )
                       : Align(
@@ -137,95 +118,124 @@ class DragdropState extends State<Dragdrop> with AutomaticKeepAliveClientMixin {
                             'assets/leaf_v1.png',
                           ),
                           Positioned(
-                            top: 40,
-                            left: 640,
-                            child: buildDragTarget(context, "Cuticle"),
+                            top: 25,
+                            left: 400,
+                            child: _buildDragTarget(context, "Cuticle"),
                           ),
                           Positioned(
-                            top: 90,
-                            left: 640,
-                            child: buildDragTarget(context, "Epidermis"),
+                            top: 60,
+                            left: 400,
+                            child: _buildDragTarget(context, "Epidermis"),
+                          ),
+                          Positioned(
+                            top: 100,
+                            left: 400,
+                            child:
+                                _buildDragTarget(context, "Palisade mesophyll"),
                           ),
                           Positioned(
                             top: 170,
-                            left: 640,
+                            left: 15,
                             child:
-                                buildDragTarget(context, "Palisade mesophyll"),
+                                _buildDragTarget(context, "Spongy mesophyll"),
                           ),
                           Positioned(
-                            top: 275,
-                            left: 20,
-                            child: buildDragTarget(context, "Spongy mesophyll"),
+                            top: 160,
+                            left: 400,
+                            child: _buildDragTarget(context, "Vein"),
                           ),
                           Positioned(
-                            top: 255,
-                            left: 640,
-                            child: buildDragTarget(context, "Vein"),
+                            top: 225,
+                            left: 15,
+                            child: _buildDragTarget(context, "Stomata"),
                           ),
                           Positioned(
-                            top: 360,
-                            left: 20,
-                            child: buildDragTarget(context, "Stomata"),
-                          ),
-                          Positioned(
-                            top: 330,
-                            left: 640,
-                            child: buildDragTarget(context, "Lower Epidermis"),
+                            top: 210,
+                            left: 400,
+                            child: _buildDragTarget(context, "Lower Epidermis"),
                           ),
                         ],
                       ),
                     ),
+                    //   ),
+                    // ),
                   ),
                 ],
               ),
-              // Score Display
-              globals.isSubmitted[0]
-                  ? ScoreText(
-                      score: globals.globalScore
-                          .reduce((value, element) => value + element))
-                  : Container(),
-            ],
-          ),
+            ),
+            // Score Display
+            globals.isSubmitted[0]
+                ? ScoreText(
+                    score: globals.globalScore
+                        .reduce((value, element) => value + element))
+                : Container(),
+          ],
         ),
       ),
     );
   }
 
-  DragTarget<String> buildDragTarget(BuildContext context, String label) {
+  Draggable<String> _buildDraggable(String label) {
+    return Draggable<String>(
+      data: label,
+      feedback: Material(
+        color: Colors.transparent,
+        child: DraggableLabel(
+          label: label,
+          isDragging: true,
+          key: ValueKey(label),
+        ),
+      ),
+      childWhenDragging: Container(),
+      child: DraggableLabel(
+        label: label,
+        key: ValueKey(label),
+      ),
+    );
+  }
+
+  DragTarget<String> _buildDragTarget(BuildContext context, String label) {
     return DragTarget<String>(
       builder: (context, incoming, rejected) {
         bool isLabelCorrect = droppedLabels[label] != null;
-
-        return Container(
-          width: 100,
-          height: 40,
-          decoration: (globals.isSubmitted[0])
-              ? BoxDecoration(
-                  color: Colors.green,
+        return (globals.isSubmitted[0] || !isLabelCorrect)
+            ? Container(
+                width: 80,
+                height: 25,
+                decoration: BoxDecoration(
+                  color: Colors.white,
                   border: Border.all(color: Colors.black),
-                )
-              : isLabelCorrect
-                  ? BoxDecoration(
-                      color: Colors.black,
-                      border: Border.all(color: Colors.black),
-                    )
-                  : BoxDecoration(
-                      color: Colors.green[50],
-                      border: Border.all(color: Colors.black),
-                    ),
-          alignment: Alignment.center,
-          child: Text(
-            globals.isSubmitted[0] ? label : droppedLabels[label] ?? "",
-            style: const TextStyle(color: Colors.white),
-          ),
-        );
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  globals.isSubmitted[0] ? label : "",
+                  style: const TextStyle(color: Colors.white),
+                ),
+              )
+            : _buildDraggable(isLabelCorrect ? droppedLabels[label] ?? "" : "");
+      },
+      onLeave: (incoming) {
+        //  when a label is dragged out of the target.
+        setState(() {
+          if (droppedLabels[label] == incoming) {
+            // The dragged item is the current label of this target, so clear it.
+            droppedLabels[label] = null;
+            labelPositions[incoming!] = false;
+          }
+        });
       },
       onWillAcceptWithDetails: (incoming) => true,
       onAcceptWithDetails: (incoming) {
         setState(() {
-          droppedLabels
-              .updateAll((key, value) => value == incoming.data ? null : value);
+          // Handle the case where a label is already dropped in this target
+          if (droppedLabels[label] != null) {
+            // Remove the old label from the labelPositions map
+            labelPositions[droppedLabels[label]!] = false;
+          }
+
+          // Assign the new label to the target
           droppedLabels[label] = incoming.data;
+          labelPositions[incoming.data] = true;
         });
       },
     );
