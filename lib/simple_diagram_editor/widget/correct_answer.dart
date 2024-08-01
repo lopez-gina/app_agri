@@ -1,51 +1,8 @@
-import 'package:app_agri/simple_diagram_editor/data/custom_component_data.dart';
 import 'package:app_agri/simple_diagram_editor/data/custom_link_data.dart';
 import 'package:diagram_editor/diagram_editor.dart';
 import 'package:flutter/material.dart';
 
 class CorrectAnswer {
-  static final List<ComponentData> components = [
-    ComponentData(
-      position: const Offset(150, 50),
-      size: const Size(120, 72),
-      data: MyComponentData(
-        text: 'O Organic matter',
-      ),
-      type: 'rect',
-    ),
-    ComponentData(
-      position: const Offset(150, 150),
-      size: const Size(120, 72),
-      data: MyComponentData(
-        text: 'A Surface',
-      ),
-      type: 'rect',
-    ),
-    ComponentData(
-      position: const Offset(150, 250),
-      size: const Size(120, 50),
-      data: MyComponentData(
-        text: 'B Subsoil',
-      ),
-      type: 'rect',
-    ),
-    ComponentData(
-      position: const Offset(150, 350),
-      size: const Size(120, 72),
-      data: MyComponentData(
-        text: 'C Substratum',
-      ),
-      type: 'rect',
-    ),
-    ComponentData(
-      position: const Offset(150, 450),
-      size: const Size(120, 50),
-      data: MyComponentData(
-        text: 'R Bedrock',
-      ),
-      type: 'rect',
-    ),
-  ];
   static final List<LinkData> links2 = [
     LinkData(
       id: 'link1',

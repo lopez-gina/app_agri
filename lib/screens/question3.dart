@@ -1,5 +1,4 @@
 import 'package:app_agri/common_widget/header.dart';
-import 'package:app_agri/common_widget/score_text.dart';
 import 'package:flutter/material.dart';
 import '../globals.dart' as globals;
 
@@ -141,17 +140,20 @@ class Question3ScreenState extends State<Question3Screen>
     super.build(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           Header(
               text:
                   '${globals.isSubmitted[2] ? 'CORRECTION - ' : ''}Question 3\nWrite the symbol equation of the photosynthesis${globals.isSubmitted[2] ? '\nCorrect answers: ${globals.globalScore[2]}/${globals.correctNumbers[2]}' : ''}'),
           const SizedBox(height: 30),
           if (globals.isSubmitted[2]) ...[
-            Text("Correct answer:",
-                style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                      color: Colors.black,
-                    )),
+            Align(
+              alignment: Alignment.center,
+              child: Text("Correct answer:",
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        color: Colors.black,
+                      )),
+            ),
             SizedBox(height: size.height * 0.1),
           ],
           globals.isSubmitted[2]
@@ -172,7 +174,7 @@ class Question3ScreenState extends State<Question3Screen>
                             _buildTextField(0, size.width * 0.1,
                                 isNumber: true),
                             SizedBox(width: size.width * 0.02),
-                            _buildTextField(1, size.width * 0.23),
+                            _buildTextField(1, size.width * 0.2),
                             const Icon(
                               Icons.add,
                               color: Colors.black,
@@ -181,7 +183,7 @@ class Question3ScreenState extends State<Question3Screen>
                             _buildTextField(2, size.width * 0.1,
                                 isNumber: true),
                             SizedBox(width: size.width * 0.02),
-                            _buildTextField(3, size.width * 0.23),
+                            _buildTextField(3, size.width * 0.2),
                           ],
                         ),
                         const SizedBox(height: 30),
@@ -208,7 +210,7 @@ class Question3ScreenState extends State<Question3Screen>
                             _buildTextField(6, size.width * 0.1,
                                 isNumber: true),
                             SizedBox(width: size.width * 0.02),
-                            _buildTextField(7, size.width * 0.23),
+                            _buildTextField(7, size.width * 0.2),
                             const Icon(
                               Icons.add,
                               color: Colors.black,
@@ -217,7 +219,7 @@ class Question3ScreenState extends State<Question3Screen>
                             _buildTextField(8, size.width * 0.1,
                                 isNumber: true),
                             SizedBox(width: size.width * 0.02),
-                            _buildTextField(9, size.width * 0.23),
+                            _buildTextField(9, size.width * 0.2),
                           ],
                         ),
                       ],
@@ -225,17 +227,9 @@ class Question3ScreenState extends State<Question3Screen>
                   ),
                 ),
           if (_isKeyboardVisible && !globals.isSubmitted[2]) ...[
-            const Spacer(),
+            SizedBox(height: size.height * 0.02),
             _buildCustomKeyboard()
-          ] else if (globals.isSubmitted[2]) ...[
-            SizedBox(
-              height: size.height * 0.3,
-            ),
-            ScoreText(
-                score: globals.globalScore
-                    .reduce((value, element) => value + element)),
-          ] else
-            Container()
+          ]
         ],
       ),
     );

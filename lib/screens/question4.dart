@@ -1,5 +1,4 @@
 import 'package:app_agri/common_widget/header.dart';
-import 'package:app_agri/common_widget/score_text.dart';
 import 'package:app_agri/simple_diagram_editor/widget/editor.dart';
 import 'package:flutter/material.dart';
 import 'package:app_agri/globals.dart' as globals;
@@ -41,22 +40,15 @@ class Question4ScreenState extends State<Question4Screen>
             !globals.isSubmitted[3]
                 ? Container(
                     padding: const EdgeInsets.only(left: 20, top: 20),
-                    height: size.height * 0.75,
+                    height: size.height * 0.7,
                     child: SimpleDemoEditor(
                       key: _editorKey,
                       onSubmit: checkAnswer,
                       selectMenu: 1,
                     ),
                   )
-                : Image.asset("assets/question4_correct.png"),
-            if (globals.isSubmitted[3]) const Spacer(),
-            if (globals.isSubmitted[3])
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ScoreText(
-                    score: globals.globalScore
-                        .reduce((value, element) => value + element)),
-              ),
+                : Image.asset("assets/question4_correct.png",
+                    height: size.height * 0.43),
           ],
         ),
       ),

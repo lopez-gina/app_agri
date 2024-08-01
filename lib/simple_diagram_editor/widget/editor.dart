@@ -1,7 +1,6 @@
 import 'package:app_agri/simple_diagram_editor/data/custom_link_data.dart';
 import 'package:app_agri/simple_diagram_editor/policy/my_policy_set.dart';
 import 'package:app_agri/simple_diagram_editor/widget/correct_answer.dart';
-import 'package:app_agri/simple_diagram_editor/widget/option_icon.dart';
 import 'package:app_agri/simple_diagram_editor/widget/menu.dart';
 import 'package:diagram_editor/diagram_editor.dart';
 import '../../globals.dart' as globals;
@@ -66,11 +65,10 @@ class SimpleDemoEditorState extends State<SimpleDemoEditor> {
     final correctAnswerLinks =
         widget.selectMenu == 1 ? CorrectAnswer.links : CorrectAnswer.links2;
 
-    if (linkList.length < correctAnswerLinks.length) {
+    if (linkList.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         backgroundColor: Colors.red,
-        content:
-            Text('You have an incorrect number of links.\nPlease try again!'),
+        content: Text('Please draw at least one link between components'),
         duration: Duration(seconds: 2),
       ));
     } else {
@@ -101,7 +99,6 @@ class SimpleDemoEditorState extends State<SimpleDemoEditor> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // showPerformanceOverlay: !kIsWeb,
       showPerformanceOverlay: false,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -117,106 +114,19 @@ class SimpleDemoEditorState extends State<SimpleDemoEditor> {
                   ),
                 ),
               ),
+              //instruction specifying the expected number of links
               Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      OptionIcon(
-                        color: Colors.grey.withOpacity(0.7),
-                        iconData:
-                            isOptionsVisible ? Icons.menu_open : Icons.menu,
-                        shape: BoxShape.rectangle,
-                        onPressed: () {
-                          setState(() {
-                            isOptionsVisible = !isOptionsVisible;
-                          });
-                        },
-                      ),
-                      const SizedBox(width: 8),
-                      Visibility(
-                        visible: isOptionsVisible,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            OptionIcon(
-                              tooltip: 'reset view',
-                              color: Colors.grey.withOpacity(0.7),
-                              iconData: Icons.replay,
-                              onPressed: () => myPolicySet.resetView(),
-                            ),
-                            const SizedBox(width: 8),
-                            OptionIcon(
-                              tooltip: 'delete all',
-                              color: Colors.grey.withOpacity(0.7),
-                              iconData: Icons.delete_forever,
-                              onPressed: () => myPolicySet.removeAll(),
-                            ),
-                            const SizedBox(width: 8),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Visibility(
-                                  visible: myPolicySet.isMultipleSelectionOn,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      OptionIcon(
-                                        tooltip: 'select all',
-                                        color: Colors.grey.withOpacity(0.7),
-                                        iconData: Icons.all_inclusive,
-                                        onPressed: () =>
-                                            myPolicySet.selectAll(),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      OptionIcon(
-                                        tooltip: 'duplicate selected',
-                                        color: Colors.grey.withOpacity(0.7),
-                                        iconData: Icons.copy,
-                                        onPressed: () =>
-                                            myPolicySet.duplicateSelected(),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      OptionIcon(
-                                        tooltip: 'remove selected',
-                                        color: Colors.grey.withOpacity(0.7),
-                                        iconData: Icons.delete,
-                                        onPressed: () =>
-                                            myPolicySet.removeSelected(),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                OptionIcon(
-                                  tooltip: myPolicySet.isMultipleSelectionOn
-                                      ? 'cancel multiselection'
-                                      : 'enable multiselection',
-                                  color: Colors.grey.withOpacity(0.7),
-                                  iconData: myPolicySet.isMultipleSelectionOn
-                                      ? Icons.group_work
-                                      : Icons.group_work_outlined,
-                                  onPressed: () {
-                                    setState(() {
-                                      if (myPolicySet.isMultipleSelectionOn) {
-                                        myPolicySet.turnOffMultipleSelection();
-                                      } else {
-                                        myPolicySet.turnOnMultipleSelection();
-                                      }
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                  alignment: Alignment.topRight,
+                  child: Container(
+                      width: 120,
+                      padding: const EdgeInsets.only(top: 20, right: 10),
+
+                      // color: Colors.grey.withOpacity(0.7),
+                      child: Text(
+                        "Expected number of links: ${globals.correctNumbers[widget.selectMenu + 2]}",
+                        style: const TextStyle(fontSize: 12, color: Colors.red),
+                      ))),
+              //Component menu
               Positioned(
                 top: 0,
                 left: 0,

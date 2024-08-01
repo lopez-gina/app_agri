@@ -1,6 +1,8 @@
 import 'package:app_agri/screens/question.dart';
 import 'package:flutter/material.dart';
 
+import 'about.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -85,7 +87,11 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 width: 200,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AboutScreen()),
+                  ),
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.blueAccent.shade400,
                     shape: RoundedRectangleBorder(

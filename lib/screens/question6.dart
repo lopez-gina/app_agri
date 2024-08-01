@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:app_agri/common_widget/header.dart';
 import 'package:flutter/material.dart';
-import '../common_widget/score_text.dart';
 import '../globals.dart' as globals;
 
 class Question6Screen extends StatefulWidget {
@@ -67,7 +66,6 @@ class Question6ScreenState extends State<Question6Screen>
         }
       }
     }
-
     globals.isSubmitted[5] = true;
   }
 
@@ -143,11 +141,6 @@ class Question6ScreenState extends State<Question6Screen>
               ),
             ),
           ),
-          globals.isSubmitted[5]
-              ? ScoreText(
-                  score: globals.globalScore
-                      .reduce((value, element) => value + element))
-              : Container(),
         ],
       ),
     );

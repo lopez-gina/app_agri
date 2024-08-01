@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../common_widget/header.dart';
-import '../common_widget/score_text.dart';
 import '../simple_diagram_editor/widget/editor.dart';
 import 'package:app_agri/globals.dart' as globals;
 
@@ -45,7 +44,7 @@ class Question5ScreenState extends State<Question5Screen>
             !globals.isSubmitted[4]
                 ? Container(
                     padding: const EdgeInsets.only(left: 20, top: 20),
-                    height: size.height * 0.75,
+                    height: size.height * 0.7,
                     child: SimpleDemoEditor(
                       key: _editorKey,
                       onSubmit: checkAnswer,
@@ -72,17 +71,9 @@ class Question5ScreenState extends State<Question5Screen>
                               scale: _scale,
                               child: Image.asset(
                                 "assets/question5_correct.png",
-                                height: size.height * 0.55,
+                                height: size.height * 0.42,
                               ),
                             )))),
-            if (globals.isSubmitted[4]) const Spacer(),
-            if (globals.isSubmitted[4])
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ScoreText(
-                    score: globals.globalScore
-                        .reduce((value, element) => value + element)),
-              ),
           ],
         ),
       ),

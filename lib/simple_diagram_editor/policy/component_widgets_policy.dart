@@ -1,8 +1,6 @@
-//import 'package:app_agri/simple_diagram_editor/dialog/edit_component_dialog.dart';
 import 'package:app_agri/simple_diagram_editor/policy/custom_policy.dart';
 import 'package:app_agri/simple_diagram_editor/widget/option_icon.dart';
 import 'package:diagram_editor/diagram_editor.dart';
-
 import 'package:flutter/material.dart';
 
 mixin MyComponentWidgetsPolicy

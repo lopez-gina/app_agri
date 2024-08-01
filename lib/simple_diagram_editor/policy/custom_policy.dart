@@ -3,8 +3,6 @@ import 'package:diagram_editor/diagram_editor.dart';
 import 'package:flutter/material.dart';
 
 mixin CustomStatePolicy implements PolicySet {
-  bool isGridVisible = false; //gl
-
   List<Map<String, String>> bodies2 = [
     {'Evaporation': 'rect'},
     {'Nitrogen fixation by bacteria in roots': 'rect'},
@@ -37,8 +35,6 @@ mixin CustomStatePolicy implements PolicySet {
     {'C Substratum': 'rect'},
     {'R Bedrock': 'rect'},
     {'O Organic matter': 'rect'},
-    // {'rect': 'rect'},
-    // {'bean': 'bean'},
   ];
 
   String? selectedComponentId;

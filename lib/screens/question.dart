@@ -82,8 +82,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   _currentPage > 0 ? () => _goToPage(_currentPage - 1) : () {},
               onNext: _currentPage < 5
                   ? () {
-                      globals.isSubmitted[_currentPage] = true;
                       _goToPage(_currentPage + 1);
+                      globals.isSubmitted[_currentPage - 1] = true;
                     }
                   : () => Navigator.pushReplacement(
                       context,

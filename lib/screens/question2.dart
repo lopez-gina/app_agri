@@ -2,7 +2,6 @@ import 'package:app_agri/common_widget/sliver_persistent_header.dart';
 import 'package:app_agri/models/polygon.dart';
 import 'package:flutter/material.dart';
 import '../common_widget/header.dart';
-import '../common_widget/score_text.dart';
 import '../globals.dart' as globals;
 
 class Question2Screen extends StatefulWidget {
@@ -219,13 +218,6 @@ class Question2ScreenState extends State<Question2Screen>
                 ),
               ),
             ),
-            SliverToBoxAdapter(
-              child: globals.isSubmitted[1]
-                  ? ScoreText(
-                      score: globals.globalScore
-                          .reduce((value, element) => value + element))
-                  : Container(),
-            )
           ],
         ),
       ),
