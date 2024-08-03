@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 class Polygon {
   final List<Offset> vertices;
-  final Offset centroid;
+  Offset centroid;
 
-  Polygon(this.vertices,this.centroid);
+  Polygon(
+    this.vertices,
+    this.centroid,
+  );
 
   bool contains(Offset point) {
     bool result = false;
@@ -21,4 +24,15 @@ class Polygon {
     return result;
   }
 
+  void scaleOffset(Size imageScaledSize) {
+    Size imageOrignalSize = const Size(850, 823);
+    for (int i = 0; i < vertices.length; i++) {
+      vertices[i] = Offset(
+          vertices[i].dx * imageScaledSize.height / imageOrignalSize.height,
+          vertices[i].dy * imageScaledSize.width / imageOrignalSize.width);
+    }
+    centroid = Offset(
+        centroid.dx * imageScaledSize.height / imageOrignalSize.height,
+        centroid.dy * imageScaledSize.width / imageOrignalSize.width);
+  }
 }
